@@ -22,7 +22,7 @@ Untuk memberitahu StatefulWidget bahwa ada object yang berubah pada state, kita 
 
 ## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas!
 - Generate proyek Flutter dengan perintah flutter create counter_7 dan masuk ke dalam direktori proyek dengan command cd counter_7.
-- import 'package:flutter/material.dart', membuat fungsi main(), dan class-class yang mendukung app counter_7.
+- Melakukan import 'package:flutter/material.dart', membuat fungsi main(), dan membuat class-class yang mendukung app counter_7 yang meng-extends StatefulWidget ataupun StatelessWidget.
 - Membuat local variabel _counter, fungsi increment dan decrement counter. 
 - Membuat fungsi changetText() yang akan mengubah text GANJIL / GENAP sesuai ketentuan soal.
 - Menambahkan komponen di dalam StatefulWidget yakni Text yang menampilkan return dari fungsi changeText(), nilai dari variabel _counter, dan FloatingActionButton yang terdiri dari button `-` dan `+` beserta actionsnya, dan menambahkan widget Expanded untuk memberikan space antara kedua button.
