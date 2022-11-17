@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:counter_7/form.dart';
 import 'package:counter_7/data.dart';
+import 'package:counter_7/drawer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,39 +18,34 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(
-        listJudulTerdaftar: [],
-        listNominalTerdaftar: [],
-        listJenisTerdaftar: [],
-      ),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  //const MyHomePage({super.key});
+  const MyHomePage({super.key});
 
-  List<String> listJudulTerdaftar;
-  List<String> listNominalTerdaftar;
-  List<String> listJenisTerdaftar;
-  MyHomePage(
-      {super.key,
-      required this.listJudulTerdaftar,
-      required this.listNominalTerdaftar,
-      required this.listJenisTerdaftar});
+  // List<String> listJudulTerdaftar;
+  // List<String> listNominalTerdaftar;
+  // List<String> listJenisTerdaftar;
+  // MyHomePage(
+  //     {super.key,
+  //     required this.listJudulTerdaftar,
+  //     required this.listNominalTerdaftar,
+  //     required this.listJenisTerdaftar});
   final String title = 'Program Counter';
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState(
-      listJudulTerdaftar, listNominalTerdaftar, listJenisTerdaftar);
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> listJudulTerdaftar = [];
-  List<String> listNominalTerdaftar = [];
-  List<String> listJenisTerdaftar = [];
-  _MyHomePageState(this.listJudulTerdaftar, this.listNominalTerdaftar,
-      this.listJenisTerdaftar);
+  // List<String> listJudulTerdaftar = [];
+  // List<String> listNominalTerdaftar = [];
+  // List<String> listJenisTerdaftar = [];
+  // _MyHomePageState(this.listJudulTerdaftar, this.listNominalTerdaftar,
+  //     this.listJenisTerdaftar);
   int _counter = 0;
   //String textHolder = 'Genap';
   bool positive = false;
@@ -125,52 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
         ),
-        drawer: Drawer(
-          child: Column(
-            children: [
-              // Menambahkan clickable menu
-              ListTile(
-                title: const Text('counter_7'),
-                onTap: () {
-                  // Route menu ke halaman utama
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MyHomePage(
-                            listJudulTerdaftar: listJudulTerdaftar,
-                            listNominalTerdaftar: listNominalTerdaftar,
-                            listJenisTerdaftar: listJenisTerdaftar)),
-                  );
-                },
-              ),
-              ListTile(
-                title: const Text('Tambah Budget'),
-                onTap: () {
-                  // Route menu ke halaman form
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MyFormPage()),
-                  );
-                },
-              ),
-              // TAMBAHIN 1 HALAMAN LAGII, DATA BUDGET
-              ListTile(
-                title: const Text('Data Budget'),
-                onTap: () {
-                  // Route menu ke halaman form
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MyDataPage(
-                            listJudulTerdaftar: listJudulTerdaftar,
-                            listNominalTerdaftar: listNominalTerdaftar,
-                            listJenisTerdaftar: listJenisTerdaftar)),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: MyDrawer(),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

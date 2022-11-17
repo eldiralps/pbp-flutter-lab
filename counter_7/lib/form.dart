@@ -2,6 +2,7 @@ import 'package:counter_7/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:counter_7/data.dart';
+import 'package:counter_7/drawer.dart';
 
 class MyFormPage extends StatefulWidget {
   const MyFormPage({super.key});
@@ -14,13 +15,10 @@ class _MyFormPageState extends State<MyFormPage> {
   final _formKey = GlobalKey<FormState>();
   String _judul = "";
   String _nominal = "";
-  String jenisBudget = 'Pengeluaran';
+  String jenisBudget = "Pengeluaran";
   List<String> listPilihJenis = ['Pengeluaran', 'Pemasukan'];
-  List<Budget> daftarBudget = [];
-
-  List<String> listJudulTerdaftar = [];
-  List<String> listNominalTerdaftar = [];
-  List<String> listJenisTerdaftar = [];
+  String tanggal = "";
+  DateTime? _date;
 
   @override
   Widget build(BuildContext context) {
@@ -28,52 +26,7 @@ class _MyFormPageState extends State<MyFormPage> {
       appBar: AppBar(
         title: Text('Form'),
       ),
-      drawer: Drawer(
-        child: Column(
-          children: [
-            // Menambahkan clickable menu
-            ListTile(
-              title: const Text('counter_7'),
-              onTap: () {
-                // Route menu ke halaman utama
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MyHomePage(
-                          listJudulTerdaftar: listJudulTerdaftar,
-                          listNominalTerdaftar: listNominalTerdaftar,
-                          listJenisTerdaftar: listJenisTerdaftar)),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text('Tambah Budget'),
-              onTap: () {
-                // Route menu ke halaman form
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const MyFormPage()),
-                );
-              },
-            ),
-            // TAMBAHIN 1 HALAMAN LAGII, DATA BUDGET
-            ListTile(
-              title: const Text('Data Budget'),
-              onTap: () {
-                // Route menu ke halaman form
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MyDataPage(
-                          listJudulTerdaftar: listJudulTerdaftar,
-                          listNominalTerdaftar: listNominalTerdaftar,
-                          listJenisTerdaftar: listJenisTerdaftar)),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: MyDrawer(),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -153,7 +106,7 @@ class _MyFormPageState extends State<MyFormPage> {
                       }),
                 ),
                 ListTile(
-                  leading: const Icon(Icons.class_),
+                  leading: const Icon(Icons.money_off),
                   title: const Text(
                     'Pilih Jenis',
                   ),
@@ -173,6 +126,31 @@ class _MyFormPageState extends State<MyFormPage> {
                     },
                   ),
                 ),
+                Padding(
+                  // Menggunakan padding sebesar 8 pixels
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      //hintText: "Tanggal",
+                      labelText: "Tanggal",
+
+                      // Menambahkan circular border agar lebih rapi
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                    onTap: () async {
+                      showDate(context: context);
+                    },
+                    // Validator sebagai validasi form
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Tanggal tidak boleh kosong!';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
                 TextButton(
                     child: const Text(
                       "Simpan",
@@ -183,10 +161,9 @@ class _MyFormPageState extends State<MyFormPage> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        //Budget newData = new Budget('$_judul', '${_nominal.toStringAsFixed(0)}', jenisBudget);
-                        listJudulTerdaftar.add('$_judul');
-                        listNominalTerdaftar.add('$_nominal');
-                        listJenisTerdaftar.add('$jenisBudget');
+                        // Budget newData =
+                        addBudget(
+                            '$_judul', '$_nominal', '$jenisBudget', '$tanggal');
                         showDialog(
                           context: context,
                           builder: (context) {
@@ -210,6 +187,7 @@ class _MyFormPageState extends State<MyFormPage> {
                                     Center(
                                         child:
                                             Text('Jenis Budget: $jenisBudget')),
+                                    Center(child: Text('Tanggal: $tanggal')),
                                     SizedBox(height: 7),
                                     TextButton(
                                       onPressed: () {
@@ -232,18 +210,67 @@ class _MyFormPageState extends State<MyFormPage> {
       ),
     );
   }
+
+  Future<Function()?> showDate({required BuildContext context}) async {
+    _date = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2030),
+      lastDate: DateTime(2010),
+    );
+    if (_date != null) {
+      tanggal = _date.toString();
+    }
+    return null;
+  }
 }
 
 class Budget {
   String judul = "";
-  int nominal = 0;
+  String nominal = "";
   String jenisBudget = "";
+  String tanggal = "";
 
-  Budget(String judul, int nominal, String jenis) {
-    this.judul = judul;
-    this.nominal = nominal;
-    this.jenisBudget = jenis;
+  Budget({
+    required this.judul,
+    required this.nominal,
+    required this.jenisBudget,
+    required this.tanggal,
+  });
+
+  String get getJudul {
+    return judul;
   }
-  // getJudul()
 
+  String get getNominal {
+    return nominal;
+  }
+
+  String get getJenis {
+    return jenisBudget;
+  }
+
+  String get getTanggal {
+    return tanggal;
+  }
+}
+
+class ListBudget {
+  static List<Budget> daftarBudget = [];
+  void addBudget(Budget newBudget) {
+    daftarBudget.add(newBudget);
+  }
+
+  List<Budget> get getListBudget {
+    return daftarBudget;
+  }
+}
+
+void addBudget(
+    String judul, String nominal, String jenisBudget, String tanggal) {
+  ListBudget.daftarBudget.add(Budget(
+      judul: judul,
+      nominal: nominal,
+      jenisBudget: jenisBudget,
+      tanggal: tanggal));
 }

@@ -1,88 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:counter_7/form.dart';
 import 'package:counter_7/main.dart';
+import 'package:counter_7/drawer.dart';
 
 class MyDataPage extends StatefulWidget {
-  //const MyDataPage({super.key});
-
-  List<String> listJudulTerdaftar;
-  List<String> listNominalTerdaftar;
-  List<String> listJenisTerdaftar;
-  MyDataPage(
-      {super.key,
-      required this.listJudulTerdaftar,
-      required this.listNominalTerdaftar,
-      required this.listJenisTerdaftar});
-  //: super(key: key);
+  const MyDataPage({super.key});
 
   @override
-  State<MyDataPage> createState() => _MyDataPageState(
-      listJudulTerdaftar, listNominalTerdaftar, listJenisTerdaftar);
+  State<MyDataPage> createState() => _MyDataPageState();
 }
 
 class _MyDataPageState extends State<MyDataPage> {
-  List<String> listJudulTerdaftar;
-  List<String> listNominalTerdaftar;
-  List<String> listJenisTerdaftar;
-  _MyDataPageState(this.listJudulTerdaftar, this.listNominalTerdaftar,
-      this.listJenisTerdaftar);
-
   @override
   Widget build(BuildContext context) {
+    final listBudget = ListBudget.daftarBudget;
     return Scaffold(
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
           title: Text('Data Budget'),
         ),
-        drawer: Drawer(
-          child: Column(
-            children: [
-              // Menambahkan clickable menu
-              ListTile(
-                title: const Text('counter_7'),
-                onTap: () {
-                  // Route menu ke halaman utama
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MyHomePage(
-                            listJudulTerdaftar: listJudulTerdaftar,
-                            listNominalTerdaftar: listNominalTerdaftar,
-                            listJenisTerdaftar: listJenisTerdaftar)),
-                  );
-                },
-              ),
-              ListTile(
-                title: const Text('Tambah Budget'),
-                onTap: () {
-                  // Route menu ke halaman form
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MyFormPage()),
-                  );
-                },
-              ),
-              // TAMBAHIN 1 HALAMAN LAGII, DATA BUDGET
-              ListTile(
-                title: const Text('Data Budget'),
-                onTap: () {
-                  // Route menu ke halaman form
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MyDataPage(
-                            listJudulTerdaftar: listJudulTerdaftar,
-                            listNominalTerdaftar: listNominalTerdaftar,
-                            listJenisTerdaftar: listJenisTerdaftar)),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: MyDrawer(),
         body: ListView.builder(
-          itemCount: listJudulTerdaftar.length,
+          itemCount: listBudget.length,
           itemBuilder: (context, index) {
             return Padding(
                 padding: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
@@ -92,11 +32,14 @@ class _MyDataPageState extends State<MyDataPage> {
                       borderRadius: BorderRadius.circular(0)),
                   child: ListTile(
                     title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[Text(listJudulTerdaftar[index])],
-                    ),
-                    subtitle: Text(listNominalTerdaftar[index]),
-                    trailing: Text(listJenisTerdaftar[index]),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(listBudget[index].getJudul),
+                          Expanded(child: Container()),
+                          Text(listBudget[index].getTanggal)
+                        ]),
+                    subtitle: Text(listBudget[index].getNominal),
+                    trailing: Text(listBudget[index].getJenis),
                   ),
                 ));
           },
