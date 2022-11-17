@@ -14,7 +14,7 @@ class _MyFormPageState extends State<MyFormPage> {
   final _formKey = GlobalKey<FormState>();
   String _judul = "";
   String _nominal = "";
-  String jenisBudget = '';
+  String jenisBudget = 'Pengeluaran';
   List<String> listPilihJenis = ['Pengeluaran', 'Pemasukan'];
   List<Budget> daftarBudget = [];
 
@@ -159,6 +159,7 @@ class _MyFormPageState extends State<MyFormPage> {
                   ),
                   trailing: DropdownButton(
                     value: jenisBudget,
+                    icon: const Icon(Icons.keyboard_arrow_down),
                     items: listPilihJenis.map((String items) {
                       return DropdownMenuItem(
                         value: items,
