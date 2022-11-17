@@ -41,7 +41,7 @@ class MyHomePage extends StatefulWidget {
 
   @override
   State<MyHomePage> createState() => _MyHomePageState(
-      listJenisTerdaftar, listNominalTerdaftar, listJenisTerdaftar);
+      listJudulTerdaftar, listNominalTerdaftar, listJenisTerdaftar);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
