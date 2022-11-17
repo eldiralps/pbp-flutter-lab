@@ -119,61 +119,38 @@ class _MyFormPageState extends State<MyFormPage> {
                   // Menggunakan padding sebesar 8 pixels
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    decoration: InputDecoration(
-                      hintText: "Nominal",
-                      labelText: "Nominal",
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      decoration: InputDecoration(
+                        hintText: "Nominal",
+                        labelText: "Nominal",
 
-                      // Menambahkan circular border agar lebih rapi
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        // Menambahkan circular border agar lebih rapi
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
                       ),
-                    ),
-                    // Menambahkan behavior saat nama diketik
-                    onChanged: (String? value) {
-                      setState(() {
-                        _nominal = value!;
-                      });
-                    },
-                    // Menambahkan behavior saat data disimpan
-                    onSaved: (String? value) {
-                      setState(() {
-                        _nominal = value!;
-                      });
-                    },
-                    // Validator sebagai validasi form
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Nominal tidak boleh kosong!';
-                      }
-                      return null;
-                    },
-                    // Menambahkan behavior saat nominal diketik
-                    //value: _nominal;
-                    // onChanged: (value) {
-                    //   if (value != null) {
-                    //     setState(() {
-                    //       _nominal = int.parse(value);
-                    //     });
-                    //   }
-                    // },
-                    // // Menambahkan behavior saat data disimpan
-                    // onSaved: (String? value) {
-                    //   setState(() {
-                    //     _judul = value!;
-                    //   });
-                    // },
-                    // // Validator sebagai validasi form
-                    // validator: (int value) {
-                    //   if (value == null || value.isEmpty) {
-                    //     return 'Judul tidak boleh kosong!';
-                    //   }
-                    //   return null;
-                    // },
-                  ),
+                      // Menambahkan behavior saat nama diketik
+                      onChanged: (String? value) {
+                        setState(() {
+                          _nominal = value!;
+                        });
+                      },
+                      // Menambahkan behavior saat data disimpan
+                      onSaved: (String? value) {
+                        setState(() {
+                          _nominal = value!;
+                        });
+                      },
+                      // Validator sebagai validasi form
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Nominal tidak boleh kosong!';
+                        }
+                        return null;
+                      }),
                 ),
                 ListTile(
                   leading: const Icon(Icons.class_),

@@ -82,30 +82,6 @@ class _MyDataPageState extends State<MyDataPage> {
           ),
         ),
         body: ListView.builder(
-          // //it
-          // itemBuilder: (BuildContext (context, index) => Container(
-          //   width:  MediaQuery.of(context).size.width,
-          //   padding: EdgeInsets.symmetric(horizontal:  10.0, vertical: 5.0),
-          //   child: Card(
-          //     elevation: 5.0,
-          //     shape: RoundedRectangleBorder(
-          //       borderRadius: BorderRadius.circular(0.9)
-          //     ),
-          //     child: Container(
-          //       width:  MediaQuery.of(context).size.width,
-          //       padding: EdgeInsets.symmetric(horizontal:  10.0, vertical: 10.0),
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: <Widget>[
-          //           Row(),
-          //           Container(alignment: ,)
-          //         ])
-          //     ),
-
-          //     )
-          // )
-          // )
           itemCount: listJudulTerdaftar.length,
           itemBuilder: (context, index) {
             return Padding(
