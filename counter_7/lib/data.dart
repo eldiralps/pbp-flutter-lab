@@ -5,9 +5,9 @@ import 'package:counter_7/main.dart';
 class MyDataPage extends StatefulWidget {
   //const MyDataPage({super.key});
 
-  List<String> listJudulTerdaftar = [];
-  List<String> listNominalTerdaftar = [];
-  List<String> listJenisTerdaftar = [];
+  List<String> listJudulTerdaftar;
+  List<String> listNominalTerdaftar;
+  List<String> listJenisTerdaftar;
   MyDataPage(
       {super.key,
       required this.listJudulTerdaftar,
@@ -17,13 +17,13 @@ class MyDataPage extends StatefulWidget {
 
   @override
   State<MyDataPage> createState() => _MyDataPageState(
-      listJenisTerdaftar, listNominalTerdaftar, listJenisTerdaftar);
+      listJudulTerdaftar, listNominalTerdaftar, listJenisTerdaftar);
 }
 
 class _MyDataPageState extends State<MyDataPage> {
-  List<String> listJudulTerdaftar = [];
-  List<String> listNominalTerdaftar = [];
-  List<String> listJenisTerdaftar = [];
+  List<String> listJudulTerdaftar;
+  List<String> listNominalTerdaftar;
+  List<String> listJenisTerdaftar;
   _MyDataPageState(this.listJudulTerdaftar, this.listNominalTerdaftar,
       this.listJenisTerdaftar);
 
