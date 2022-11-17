@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:counter_7/form.dart';
+import 'package:counter_7/data.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,21 +17,39 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Program Counter'),
+      home: MyHomePage(
+        listJudulTerdaftar: [],
+        listNominalTerdaftar: [],
+        listJenisTerdaftar: [],
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  //const MyHomePage({super.key});
 
-  final String title;
+  List<String> listJudulTerdaftar;
+  List<String> listNominalTerdaftar;
+  List<String> listJenisTerdaftar;
+  MyHomePage(
+      {super.key,
+      required this.listJudulTerdaftar,
+      required this.listNominalTerdaftar,
+      required this.listJenisTerdaftar});
+  final String title = 'Program Counter';
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState(
+      listJenisTerdaftar, listNominalTerdaftar, listJenisTerdaftar);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<String> listJudulTerdaftar = [];
+  List<String> listNominalTerdaftar = [];
+  List<String> listJenisTerdaftar = [];
+  _MyHomePageState(this.listJudulTerdaftar, this.listNominalTerdaftar,
+      this.listJenisTerdaftar);
   int _counter = 0;
   //String textHolder = 'Genap';
   bool positive = false;
@@ -42,16 +62,15 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
-
     });
 
     if (_counter > 0) {
       positive = true;
-    }
-    else {
+    } else {
       positive = false;
     }
   }
+
   void _decrementCounter() {
     if (_counter > 1) {
       setState(() {
@@ -66,33 +85,31 @@ class _MyHomePageState extends State<MyHomePage> {
       positive = false;
     }
     //else {
-      //positive = false;
+    //positive = false;
     //}
   }
+
   changeText() {
     if (_counter % 2 == 1) {
-      return
-      Text(
+      return Text(
         "GANJIL",
-        style : TextStyle(color: Colors.blue),
+        style: TextStyle(color: Colors.blue),
       );
       //Text(
-        //'$_counter',
-        //style: Theme.of(context).textTheme.headline4,
+      //'$_counter',
+      //style: Theme.of(context).textTheme.headline4,
       //);
     } else {
-      return
-      Text(
+      return Text(
         "GENAP",
-        style : TextStyle(color: Colors.red),
+        style: TextStyle(color: Colors.red),
       );
       //Text(
-        //'$_counter',
-        //style: Theme.of(context).textTheme.headline4,
+      //'$_counter',
+      //style: Theme.of(context).textTheme.headline4,
       //);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -103,58 +120,95 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget> [
-            changeText(),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title),
         ),
-      ),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(left:35),
-        child:
-          Row(
-            crossAxisAlignment:CrossAxisAlignment.end,
+        drawer: Drawer(
+          child: Column(
             children: [
-              if (positive) FloatingActionButton(
-                child: const Icon(Icons.remove),
-                onPressed: _decrementCounter
+              // Menambahkan clickable menu
+              ListTile(
+                title: const Text('counter_7'),
+                onTap: () {
+                  // Route menu ke halaman utama
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyHomePage(
+                            listJudulTerdaftar: listJudulTerdaftar,
+                            listNominalTerdaftar: listNominalTerdaftar,
+                            listJenisTerdaftar: listJenisTerdaftar)),
+                  );
+                },
               ),
-              Expanded(child:Container()),
+              ListTile(
+                title: const Text('Tambah Budget'),
+                onTap: () {
+                  // Route menu ke halaman form
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MyFormPage()),
+                  );
+                },
+              ),
+              // TAMBAHIN 1 HALAMAN LAGII, DATA BUDGET
+              ListTile(
+                title: const Text('Data Budget'),
+                onTap: () {
+                  // Route menu ke halaman form
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyDataPage(
+                            listJudulTerdaftar: listJudulTerdaftar,
+                            listNominalTerdaftar: listNominalTerdaftar,
+                            listJenisTerdaftar: listJenisTerdaftar)),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+        body: Center(
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          child: Column(
+            // Column is also a layout widget. It takes a list of children and
+            // arranges them vertically. By default, it sizes itself to fit its
+            // children horizontally, and tries to be as tall as its parent.
+            //
+            // Invoke "debug painting" (press "p" in the console, choose the
+            // "Toggle Debug Paint" action from the Flutter Inspector in Android
+            // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+            // to see the wireframe for each widget.
+            //
+            // Column has various properties to control how it sizes itself and
+            // how it positions its children. Here we use mainAxisAlignment to
+            // center the children vertically; the main axis here is the vertical
+            // axis because Columns are vertical (the cross axis would be
+            // horizontal).
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              changeText(),
+              Text(
+                '$_counter',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: Padding(
+            padding: EdgeInsets.only(left: 35),
+            child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+              if (positive)
+                FloatingActionButton(
+                    child: const Icon(Icons.remove),
+                    onPressed: _decrementCounter),
+              Expanded(child: Container()),
               FloatingActionButton(
-                child: const Icon(Icons.add),
-                onPressed: _incrementCounter
-              ),
-            ]
-          )
-      )
-    );
+                  child: const Icon(Icons.add), onPressed: _incrementCounter),
+            ])));
   }
 }
-
