@@ -77,3 +77,28 @@ Widget Navigator bekerja seperti tumpukan layar (stack), ia menggunakan prinsip 
 - pada bagian Widget build, tepatnya pada bagian body, gunakan widget ListTile untuk menampilkan keseluruhan budget yang sudah pernah didaftarkan
 - import masing-masing file ke file lainnya agar widget yang berada dalam file tersebut bisa saling berkesimabungan
 
+
+# TUGAS 9
+## Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+Tidak bisa, karena sebelum melakukan pemanggilan web service, kita perlu mendefinisikan model yang kita gunakan ketika melakukan pemanggilan web service, pendefinisian model dilakukan untuk merepresentasikan response dari pemanggilan web service.
+
+## Sebutkan widget apa saja yang kamu pakai di proyek kali ini dan jelaskan fungsinya.
+- `ListTile` : menampilkan satu row yang berisi 3 garis text sebagai title, subtitle, icons, dan additional text sebagai description. Setiap text pada ListTile bisa ditempatkan pada leading atau trailing
+- `FutureBuilder`: widget yang dibuat sendiri berdasarkan cuplikan interaksi terbaru pada future.
+- `Card`: widget yang menunjukkan informasi album dan dua tindakan (berbentu seperti card).
+- `CircularProgressIndicator`: sebuah widget yang menunjukkan kemajuan sepanjang lingkaran (loading).
+
+## Jelaskan mekanisme pengambilan data dari json hingga dapat ditampilkan pada Flutter.
+- Menambahkan dependency http ke proyek, dependency ini digunakan untuk bertukar data melalui HTTP request, seperti GET, POST, PUT, dan lain-lain.
+- Membuat model sesuai dengan respons dari data yang berasal dari web service tersebut.
+- Membuat http request ke web service menggunakan dependency http.
+- Mengkonversikan objek yang didapatkan dari web service ke model yang telah kita buat di langkah kedua.
+- Menampilkan data yang telah dikonversi ke aplikasi dengan FutureBuilder
+
+##  Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas.
+- Menambahkan tombol navigasi pada drawer/hamburger untuk ke halaman mywatchlist. Pada file drawer.dart, tambahkan 1 buah navigator tambahan yang mengarah pada  MyWatchlistPage. 
+- Membuat satu file dart yang berisi model mywatchlist. Untuk mendapatkan model mywatchlist, pergi ke url proyek tugas 3 (tampilan JSON), kemudian copy dan convert menggunakan Quicktype. Selanjutnya, salin model tersebut ke dalam file baru watchlist.dart
+- Menambahkan halaman mywatchlist yang berisi semua watch list yang ada pada endpoint JSON di Django yang telah kamu deploy ke Heroku sebelumnya (Tugas 3). Pada tahap ini, buat file watchlist_page.dart pada folder page, kemudian buat stateful widget dan buat fungsi fetchWatchlist() yang akan melakukan fetch data dari url proyek django yang dideklarasikan. Kemudian, pada wigdet build khususnya pada bagian body, tambahkan FutureBuilder yang akan menampilkan setiap atribut dari model watchlist.
+- Membuat navigasi dari setiap judul watch list ke halaman detail. Tambahkan event `onTap()` yang berisikan navigator yang akan me-routing ke halaman detail, lakukan pula passing data dari setiap data yang sudah didapatkan dari fetch data sebelumnya ke page DetailMyWatchlistPage.
+- Menambahkan halaman detail untuk setiap mywatchlist yang ada pada daftar tersebut. Pada tahap ini, buat file detail_watchlist.dart yang akan menampilkan data dari web yang sudah di passing sebelumnya. Kemudian tambahkan pula `ElevatedButton` "Back" pada bagian bawah halaman DetailMyWatchlistPage.
+- Menambahkan tombol untuk kembali ke daftar mywatchlist. Pada bagian ini, tombol back yang sudah dibuat sebelumnya kita beri navigator dengan fungsi pop() sehingga akan kembali ke halaman sebelumnya.
