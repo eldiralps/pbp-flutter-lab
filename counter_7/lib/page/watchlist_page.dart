@@ -53,42 +53,57 @@ class _MyWatchlistPageState extends State<MyWatchlistPage> {
                 child: CircularProgressIndicator(),
               );
             } else {
-              return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (_, index) {
-                    String title = snapshot.data![index].title;
-                    String release_date = snapshot.data![index].release_date;
-                    String rating = snapshot.data![index].rating.toString();
-                    String watched = snapshot.data![index].watched;
-                    String review = snapshot.data![index].review;
-                    return Padding(
-                        padding:
-                            EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-                        child: Card(
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0)),
-                          child: ListTile(
-                            shape: ContinuousRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
+              if (!snapshot.hasData) {
+                return Column(
+                  children: const [
+                    Text(
+                      "Tidak ada watchlist",
+                      style: TextStyle(color: Color(0xff59A5D8), fontSize: 20),
+                    ),
+                    SizedBox(height: 8),
+                  ],
+                );
+              } else {
+                return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (_, index) {
+                      String title = snapshot.data![index].fields.title;
+                      String release_date =
+                          snapshot.data![index].fields.release_date;
+                      String rating =
+                          snapshot.data![index].fields.rating.toString();
+                      String watched = snapshot.data![index].fields.watched;
+                      String review = snapshot.data![index].fields.review;
+                      return Padding(
+                          padding:
+                              EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                          child: Card(
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0)),
+                            child: ListTile(
+                              shape: ContinuousRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              title: Text(
+                                "${snapshot.data![index].fields.title}",
+                              ),
+                              subtitle: Text(
+                                  "${snapshot.data![index].fields.release_date}"),
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          DetailMyWatchlistPage(
+                                              title: title,
+                                              release_date: release_date,
+                                              rating: rating,
+                                              watched: watched,
+                                              review: review))),
                             ),
-                            title: Text(
-                              "${snapshot.data![index].title}",
-                            ),
-                            subtitle:
-                                Text("${snapshot.data![index].release_date}"),
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DetailMyWatchlistPage(
-                                        title: title,
-                                        release_date: release_date,
-                                        rating: rating,
-                                        watched: watched,
-                                        review: review))),
-                          ),
-                        ));
-                  });
+                          ));
+                    });
+              }
             }
           }),
     );
